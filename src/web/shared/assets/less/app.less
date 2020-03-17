@@ -1,0 +1,27 @@
+@import "./color.less";
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+:root {
+  font-size: 12px;
+}
+html {
+  height: 100vh;
+}
+
+body {
+  min-height: 100%;
+  background: @main-background-color;
+  color: @text-grey;
+}
+
+.body {
+  overflow-y: auto;
+}
+
+#root {
+  z-index: 1;
+}
