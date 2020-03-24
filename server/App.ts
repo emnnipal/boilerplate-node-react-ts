@@ -16,7 +16,7 @@ class App {
     this.express.use(cors())
     this.express.use(express.json())
     this.express.use(express.urlencoded({ extended: false }))
-    this.express.use(express.static(path.join(__dirname, '../../dist/web')))
+    this.express.use(express.static(path.join(__dirname, '../web')))
   }
 
   private setRoutes(): void {

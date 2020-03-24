@@ -3,23 +3,29 @@ const dotenv = require('dotenv')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const getRepoInfo = require('git-repo-info')
 
 dotenv.config()
-const {APP, PORT, AUTHORIZATION_KEY } = process.env
+const {
+  APP = 'development',
+  PORT = 3001,
+  AUTHORIZATION_KEY
+} = process.env
 
 const processEnv = new webpack.DefinePlugin({
   'process.env': {
-    // BUILD_VERSION: JSON.stringify(getRepoInfo()),
-    APP: JSON.stringify(APP || 'development'),
-    PORT: JSON.stringify(PORT),
-    AUTHORIZATION_KEY: JSON.stringify(AUTHORIZATION_KEY)
+    BUILD_VERSION: JSON.stringify(getRepoInfo()),
+    APP: JSON.stringify(APP),
+    PORT: JSON.stringify(APP === 'development' ? 3000 : PORT),
+    AUTHORIZATION_KEY: JSON.stringify(AUTHORIZATION_KEY),
+    SERVER_BASE_URL: JSON.stringify(APP === 'development' ? `http://localhost:${PORT}` : '')
   },
 });
 
 module.exports = {
   // Enable sourcemaps for debugging webpack's output.
   devtool: "source-map",
-  entry: './src/web/index.tsx',
+  entry: './web/index.tsx',
   output: {
     path: path.join(__dirname, 'dist/web'),
     filename: '[name].js',
@@ -66,21 +72,12 @@ module.exports = {
       }
     ]
   },
-
-  // When importing a module whose path matches one of the following, just
-  // assume a corresponding global variable exists and use that instead.
-  // This is important because it allows us to avoid bundling all of our
-  // dependencies, which allows browsers to cache those libraries between builds.
-  // externals: {
-  //   react: "React",
-  //   "react-dom": "ReactDOM"
-  // },
   plugins: [
     processEnv,
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: './src/web/index.html',
-      // favicon: ''
+      template: './web/index.html',
+      // favicon: './web/shared/assets/images/logo.png'
     })
   ]
 };

@@ -9,9 +9,9 @@
     "build": "npm run web:build && npm run server:build",
     "start": "npm run build && node dist/server/index.js",
     "web:build": "npm run lint && npx webpack --mode production",
-    "server:build": "npm run clean && npm run lint && tsc",
+    "server:build": "npm run clean && npm run lint && tsc -p tsconfig.server.json",
     "web:start": "npm run lint && webpack-dev-server --open --mode development",
-    "server:start": "npm run lint && ts-node-dev --respawn --transpileOnly ./src/server/index.ts"
+    "server:start": "npm run lint && ts-node-dev --respawn --transpileOnly ./server/index.ts"
   },
   "keywords": [],
   "author": "Emman Nipal",
@@ -21,6 +21,7 @@
     "@types/react-dom": "^16.9.5",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.4.2",
+    "git-repo-info": "^2.1.1",
     "html-webpack-plugin": "^3.2.0",
     "image-webpack-loader": "^6.0.0",
     "less": "^3.11.1",
